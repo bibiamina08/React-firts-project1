@@ -2,13 +2,13 @@ import React from 'react'
 
 const Sidebar = () => {
   return (
-    <div className="w-[18%] h-[800px] bg-[#270E5F] ">
+    <div className="w-[20%] h-[700px] bg-[#270E5F] dark:bg-dark-sidebar pt-10">
 <div className='flex justify-center items-center'>
 <h2 className='text-2xl px-4 pt-4 font-bold font-serif text-white'>Cleverwise</h2>
 </div>
   {/* img */}
   <div className='flex justify-center items-center py-4'>
-    <img className="w-[70px] h-[70px] object-cover rounded-full" src="src/imgs/img.jpg" alt="error" />
+    <img className="w-[70px] h-[70px] object-cover rounded-full" src="img.jpg" alt="error" />
   </div>
   {/* intro */}
   <div className='flex justify-center items-center flex-col py-4'>
@@ -22,7 +22,7 @@ const Sidebar = () => {
   <p className="text-white">Applicant</p>
   <p className="text-white">Employee</p>
   </div>
-  <div className='flex flex-col justify-center items-center py-5'>
+  <div className='flex flex-col justify-center items-center py-2'>
     <button className='bg-[#AFFFB6] w-[170px] rounded-2xl p-1 text-black font-semibold'>Payroll</button>
   </div>
     </div>

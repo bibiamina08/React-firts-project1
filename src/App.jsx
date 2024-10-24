@@ -1,24 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Sidebar from './pages/Sidebar'
-import Layout from './pages/Layout'
+// import { useState } from 'react'
+// import './App.css'
+// import Sidebar from './pages/Sidebar'
+// import Layout from './pages/Layout'
+
+import Layout from "./pages/Layout"
 
 
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const [count, setCount] = useState(0)
 
   return (
   <>
-  <div className='flex flex-wrap justify-between '>
+  <Layout/>
+  {/* <div className='flex flex-wrap justify-between'>
      <Sidebar/>
     <Layout/>
     
-  </div>
+  </div> */}
 
   </>
   )

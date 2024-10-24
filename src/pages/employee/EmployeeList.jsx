@@ -1,82 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react';
+import EmployeeListData from "../../utils/data";
 
 const EmployeeList = () => {
-  // dummydata
-  const employeeListData = [
-    {
-        Home: "New York",
-        Position: "Software Engineer",
-        Rate: 60.0,
-        Period: "Monthly",
-        WorkingHour: 160,
-        Salary: 9600.0,
-        Status: "Active"
-    },
-    {
-        Home: "Los Angeles",
-        Position: "Graphic Designer",
-        Rate: 50.0,
-        Period: "Weekly",
-        WorkingHour: 35,
-        Salary: 1750.0,
-        Status: "Active"
-    },
-    {
-        Home: "Chicago",
-        Position: "Project Manager",
-        Rate: 75.0,
-        Period: "Yearly",
-        WorkingHour: 2000,
-        Salary: 150000.0,
-        Status: "Inactive"
-    },
-    {
-        Home: "Houston",
-        Position: "Data Analyst",
-        Rate: 55.0,
-        Period: "Monthly",
-        WorkingHour: 160,
-        Salary: 8800.0,
-        Status: "Active"
-    },
-    {
-        Home: "Miami",
-        Position: "HR Specialist",
-        Rate: 45.0,
-        Period: "Weekly",
-        WorkingHour: 40,
-        Salary: 1800.0,
-        Status: "Active"
-    },
-    {
-        Home: "Seattle",
-        Position: "UX Designer",
-        Rate: 70.0,
-        Period: "Monthly",
-        WorkingHour: 160,
-        Salary: 11200.0,
-        Status: "On Leave"
-    },
-    {
-        Home: "San Francisco",
-        Position: "Marketing Manager",
-        Rate: 65.0,
-        Period: "Yearly",
-        WorkingHour: 2000,
-        Salary: 130000.0,
-        Status: "Active"
-    },
-    {
-        Home: "Boston",
-        Position: "Customer Support",
-        Rate: 40.0,
-        Period: "Weekly",
-        WorkingHour: 30,
-        Salary: 1200.0,
-        Status: "Inactive"
-    }
-];
-let content = employeeListData.map((employee) =>(
+  const [data , setData] = useState(EmployeeListData);
+  const [searchDept , setSearchDept] = useState("");
+ 
+  const searchHandler = (event) =>{
+    event.preventDefault();
+ let filteredData = EmployeeListData.filter((employeeData) => (employeeData.Position).toLowerCase() == searchDept.toLowerCase());
+
+
+
+ if (searchDept == ""){
+  setData(EmployeeListData)
+ }else {
+  setData(filteredData);
+ }
+
+
+  };
+  console.log(searchDept);
+  console.log(data)
+
+let content = data.map((employee) =>(
+ 
     <>
      <tr className=' h-[50px] border-b border-[#3f2d54]'>
           <td>{employee.Home}</td>
@@ -100,13 +47,25 @@ let content = employeeListData.map((employee) =>(
 )
    
   return (
-    <div className='text-white w-full h-[700px] px-8 pt-8'>
+    <div className='text-white w-full h-[700px] pt-8'>
+
+      <div className='flex flex-wrap justify-between items-center'>
      <h1 className='text-xl font-bold'>Payroll</h1>
 
-     {/* employee table */}
+     {/* searchbar */}
 
-     <table className='w-full mt-3'>
-      <thead className='bg-[#22182D] border-b border-[#3f2d54] h-[50px]' >
+     <form onSubmit={searchHandler}>
+      <input type="text" placeholder='Search here' 
+      // value={searchDept}
+      className='py-1 px-2 rounded-md text-black'
+      onChange={(event) => setSearchDept (event.target.value)}
+     />
+     </form>
+     </div>
+
+     {/* employee table */}
+       <table className='w-full mt-3'>
+      <thead className='bg-[#22182D] dark:bg-dark-layer border-b border-[#3f2d54] h-[50px]' >
         <tr className='rounded-md'>
           <th>Home</th>
           <th>Position</th>
@@ -117,7 +76,7 @@ let content = employeeListData.map((employee) =>(
           <th>Status</th>
         </tr>
       </thead>
-      <tbody className='text-center w-full bg-[#22182D] mt-3'>
+      <tbody className='text-center w-full bg-[#22182D]  dark:bg-dark-card mt-3'>
         {content}
         {/* employee2 */}
 
@@ -128,5 +87,5 @@ let content = employeeListData.map((employee) =>(
   )
 }
 
-export default EmployeeList
+export default EmployeeList;
 
