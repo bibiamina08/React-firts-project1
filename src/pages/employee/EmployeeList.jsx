@@ -1,10 +1,30 @@
 import React, { useState } from 'react';
 import EmployeeListData from "../../utils/data";
+import { collection, getDocs } from 'firebase/firestore';
+import db from '../../../firebase';
 
-const EmployeeList = () => {
+const EmployeeList =() => {
   const [data , setData] = useState(EmployeeListData);
   const [searchDept , setSearchDept] = useState("");
- 
+   
+  const dataCheck = async() => {
+  try {
+      const employeeRef = collection(db , "employees");
+  const querySnapshot = await getDocs(employeeRef);
+   const employees = querySnapshot.docs.map( (employee)  => employee.data ());
+   console.log(employees);
+    setData(employees)
+  } catch (error) {
+    console.error("Error fetching document : ", error);
+    
+  }
+  // querySnapshot.array.forEach( (employee) => { 
+  //   console.log(employee?.data)
+
+  // });
+  // }
+
+  dataCheck();
   const searchHandler = (event) =>{
     event.preventDefault();
  let filteredData = EmployeeListData.filter((employeeData) => (employeeData.Position).toLowerCase() == searchDept.toLowerCase());
@@ -19,13 +39,13 @@ const EmployeeList = () => {
 
 
   };
-  console.log(searchDept);
-  console.log(data)
+  // console.log(searchDept);
+  // console.log(data)
 
-let content = data.map((employee) =>(
+let content = data.map((employee, index) =>(
  
     <>
-     <tr className=' h-[50px] border-b border-[#3f2d54]'>
+     <tr className=' h-[50px] border-b border-[#3f2d54] ' key={index}>
           <td>{employee.Home}</td>
           <td className='text-center flex justify-center py-2 items-center'>
             <div className='bg-[#DDCBFC]  rounded-2xl p-1 text-black'>

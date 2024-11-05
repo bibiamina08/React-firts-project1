@@ -1,20 +1,50 @@
 import React from 'react'
 // import { MdSaveAlt } from "react-icons/md";
+import { useState } from 'react';
+import {collection , addDoc} from   "firebase/firestore"
+import db from "../../../firebase"
+import { fromJSON } from 'postcss';
 
 
 const RegistrationForm = () => {
+  const [name , setName] = useState("");
+  const[position , setPosition] = useState("");
+  const[rate , setRate] = useState("");
+  const[period , setPeriod] = useState("");
+  const[hour ,setHour] = useState("");
+  const[salary , setSalary] = useState("");
+  const[status , setStatus] = useState("");
+
+  const submitHandler =async (e) => {
+    e.preventDefault();
+    const employeesRef = collection(db , "employees");
+    const docRef = await addDoc(employeesRef , {
+      name : name,
+      position : position ,
+      rate : rate,
+      period : period,
+      hour : hour,
+      salary : salary,
+      status :status,
+    })
+    console.log("Saved data ", docRef)
+    // console.log(name,position,rate,period,hour,salary,status)
+  }
   return (
     <div className="my-8">
     <div className="w-[600px] h-auto bg-[#4e3b648f] rounded-md m-auto py-6 px-10">
       <h2 className="text-2xl text-white">RegistratioForm</h2>
       <div>
         {/* input box  */}
+        <form onSubmit={submitHandler}>
         <div className="w-full mt-2">
           <label htmlFor="" className="text-lg text-[#b1b1b1] ">
             Employee Name
           </label>
           <input
             type="text"
+            value={name}
+            onChange={(e)=> setName(e.target.value)}
             className="w-full h-12 bg-slate-300 rounded-md mt-2"
           />
         </div>
@@ -25,6 +55,8 @@ const RegistrationForm = () => {
           </label>
           <input
             type="text"
+            value={position}
+            onChange={(e)=> setPosition(e.target.value)}
             className="w-full h-12 bg-slate-300 rounded-md mt-2"
           />
         </div>
@@ -35,6 +67,8 @@ const RegistrationForm = () => {
           </label>
           <input
             type="text"
+            value={rate}
+            onChange={(e)=> setRate(e.target.value)}
             className="w-full h-12 bg-slate-300 rounded-md mt-2"
           />
         </div>
@@ -45,6 +79,8 @@ const RegistrationForm = () => {
           </label>
           <input
             type="text"
+            value={period}
+            onChange={(e)=> setPeriod(e.target.value)}
             className="w-full h-12 bg-slate-300 rounded-md mt-2"
           />
         </div>
@@ -55,6 +91,8 @@ const RegistrationForm = () => {
           </label>
           <input
             type="text"
+            value={hour}
+            onChange={(e)=> setHour(e.target.value)}
             className="w-full h-12 bg-slate-300 rounded-md mt-2"
           />
         </div>
@@ -65,27 +103,31 @@ const RegistrationForm = () => {
           </label>
           <input
             type="text"
+            value={salary}
+            onChange={(e)=> setSalary(e.target.value)}
             className="w-full h-12 bg-slate-300 rounded-md mt-2"
           />
         </div>
         {/* input box  */}
         <div className="w-full mt-2">
           <label htmlFor="" className="text-lg text-[#b1b1b1] ">
-            Working Hour
+            Status
           </label>
 
-          <select className="w-full h-12 bg-slate-300 rounded-md mt-2">
+          <select className="w-full h-12 bg-slate-300 rounded-md mt-2"  value={status}
+            onChange={(e)=> setStatus(e.target.value)}>
             <option value="active">Select Option</option>
             <option value="active">Active</option>
             <option value="inactive">Inactive</option>
           </select>
         </div>
         <div className="w-full mt-2">
-          <button className="w-[150px] h-[60px] bg-green-600 px-6  text-lg font-semibold text-white rounded-md border-none flex flex-wrap justify-between items-center">
+          <button type="submit" className="w-[150px] h-[60px] bg-green-600 px-6  text-lg font-semibold text-white rounded-md border-none flex flex-wrap justify-between items-center">
             {/* <MdSaveAlt size={25} /> */}
             Submit{" "}
           </button>
         </div>
+        </form>
       </div>
     </div>
   </div>
