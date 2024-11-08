@@ -3,7 +3,8 @@ import React from 'react'
 import { useState } from 'react';
 import {collection , addDoc} from   "firebase/firestore"
 import db from "../../../firebase"
-import { fromJSON } from 'postcss';
+// import { fromJSON } from 'postcss';
+import { useNavigate } from "react-router-dom";
 
 
 const RegistrationForm = () => {
@@ -14,6 +15,7 @@ const RegistrationForm = () => {
   const[hour ,setHour] = useState("");
   const[salary , setSalary] = useState("");
   const[status , setStatus] = useState("");
+  const navigate = useNavigate();
 
   const submitHandler =async (e) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ const RegistrationForm = () => {
       salary : salary,
       status :status,
     })
-    console.log("Saved data ", docRef)
+   navigate("/employeelist")
     // console.log(name,position,rate,period,hour,salary,status)
   }
   return (

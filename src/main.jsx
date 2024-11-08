@@ -20,7 +20,7 @@ const router = createBrowserRouter([
   errorElement : <NotFound />,
   children : [
     {
-      path : "/",
+      path : "/employeelist",
       element : <EmployeeList />,
     },
     {
