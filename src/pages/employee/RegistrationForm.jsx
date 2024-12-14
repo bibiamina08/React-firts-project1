@@ -19,6 +19,7 @@ const RegistrationForm = () => {
 
   const submitHandler =async (e) => {
     e.preventDefault();
+   try {
     const employeesRef = collection(db , "employees");
     const docRef = await addDoc(employeesRef , {
       name : name,
@@ -28,8 +29,13 @@ const RegistrationForm = () => {
       hour : hour,
       salary : salary,
       status :status,
+      
     })
-   navigate("/employeelist")
+    navigate("/employeelist")
+   } catch (error) {
+    console.log(error)
+   }
+   
     // console.log(name,position,rate,period,hour,salary,status)
   }
   return (

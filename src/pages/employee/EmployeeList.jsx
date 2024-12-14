@@ -1,16 +1,17 @@
 import React, { useState ,useEffect } from 'react';
-import EmployeeListData from "../../utils/data";
 import { collection, getDocs } from 'firebase/firestore';
 import db from '../../../firebase';
 
 const EmployeeList =() => {                      
   const [data , setData] = useState([]);
   const [searchDept , setSearchDept] = useState("");
-   
+  const [filteredData, setFilteredData] = useState([]);
+
   const dataCheck = async() => {
   try {
       const employeeRef = collection(db , "employees");
   const querySnapshot = await getDocs(employeeRef);
+  console.log(querySnapshot);
    const employees= querySnapshot.docs.map( (employee)  => employee.data ());
     setData(employees)
   } catch (error) {
@@ -18,52 +19,44 @@ const EmployeeList =() => {
     
   }
 }
-console.log(data)
-  // querySnapshot.array.forEach( (employee) => { 
-  //   console.log(employee?.data)
-
-  // });
-  // }
-
-  // dataCheck();
 
   useEffect(() => {
     dataCheck();
   }, []);
-  const searchHandler = (event) =>{
+  const searchHandler= (event) => {
     event.preventDefault();
- let filteredData = EmployeeListData.filter((employeeData) => (employeeData.Position).toLowerCase() == searchDept.toLowerCase());
+    
+    let filteredData = data.filter(
+      (employeeData) =>
+        employeeData?.position.toLowerCase() === searchDept.toLowerCase()
+    );
 
-
-
- if (searchDept == ""){
-  setData(EmployeeListData)
- }else {
-  setData(filteredData);
- }
-
-
+    if (searchDept === "") {
+      setFilteredData(data);
+    } else {
+      setFilteredData(filteredData);
+    }
   };
-  // console.log(searchDept);
-  // console.log(data)
 
-let content = data.map((employee, index) =>(
+
+
+let content = filteredData.map((employee, index) =>(
  
     <>
      <tr className=' h-[50px] border-b border-[#3f2d54] ' key={index}>
-          <td>{employee.Home}</td>
+          <td>{employee.name}</td>
           <td className='text-center flex justify-center py-2 items-center'>
             <div className='bg-[#DDCBFC]  rounded-2xl p-1 text-black'>
-         {employee.Position}
+         {employee.position}
             </div>
           </td>
-          <td>{employee.Rate}</td>
-          <td>{employee.Period}</td>
-          <td>{employee.WorkingHour}</td>
-          <td>{employee.Salary}</td>
+          <td>{employee.rate}</td>
+          <td>{employee.period}</td>
+          <td>{employee.hour}</td>
+          <td>{employee.salary}</td>
           <td className='text-center flex justify-center py-3 items-center'>
             <div className='bg-[#9566F2] w-[100px] rounded-xl p-1 text-black'>
-           {employee.Status}
+           {employee.status}
             </div></td>
         </tr>
     </>
@@ -81,7 +74,7 @@ let content = data.map((employee, index) =>(
 
      <form onSubmit={searchHandler}>
       <input type="text" placeholder='Search here' 
-      // value={searchDept}
+      value={searchDept}
       className='py-1 px-2 rounded-md text-black'
       onChange={(event) => setSearchDept (event.target.value)}
      />
@@ -92,7 +85,7 @@ let content = data.map((employee, index) =>(
        <table className='w-full mt-3'>
       <thead className='bg-[#22182D] dark:bg-dark-layer border-b border-[#3f2d54] h-[50px]' >
         <tr className='rounded-md'>
-          <th>Home</th>
+          <th>Name</th>
           <th>Position</th>
           <th>Rate</th>
           <th>Period</th>
